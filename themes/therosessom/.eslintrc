@@ -1,0 +1,30 @@
+{
+  "extends": "eslint:recommended",
+  "parserOptions": {
+    "ecmaVersion": 2020
+  },
+  "rules": {
+    "no-alert": "warn",
+    "no-bitwise": "off",
+    "camelcase": "error",
+    "curly": "error",
+    "eqeqeq": "error",
+    "no-console": "off", // development off, deployment "error"
+    "no-eq-null": "off",
+    "guard-for-in": "warn",
+    "no-empty": "warn",
+    "quotes": ["error", "single"],
+    "no-unused-vars": "warn",
+    "no-undef": "error"
+  },
+  "globals": {
+    "jQuery": "readonly",
+    "$": "readonly",
+    "_": "readonly"
+  },
+  "env": {
+    "es6": true,
+    "node": true,
+    "browser": true
+  }
+}
