@@ -71,6 +71,20 @@ function therosessom_enqueue_assets() {
 }
 add_action('wp_enqueue_scripts', 'therosessom_enqueue_assets');
 
+function enqueue_vite_assets() {
+  $is_local = strpos($_SERVER['HTTP_HOST'], 'localhost') !== false || 
+              strpos($_SERVER['HTTP_HOST'], '.test') !== false ||
+              strpos($_SERVER['HTTP_HOST'], '.local') !== false;
+              
+  if ($is_local && file_exists(get_template_directory() . '/package.json')) {
+      wp_enqueue_script('vite-client', 'http://localhost:5173/@vite/client', array(), null, true);
+      wp_enqueue_style('vite-css', 'http://localhost:5173/src/input.css', array(), null);
+  } else {
+      wp_enqueue_style('theme-styles', get_template_directory_uri() . '/dist/main.css', array(), '1.0.0');
+  }
+}
+add_action('wp_enqueue_scripts', 'enqueue_vite_assets');
+
 // Remove theme/plugin editor links for security reasons (optional)
 function therosessom_remove_submenus() {
   remove_submenu_page('themes.php', 'theme-editor.php');

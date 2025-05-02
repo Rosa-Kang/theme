@@ -45,7 +45,7 @@
             <?php bloginfo('name'); ?>
           </a>
         </h1>
-        <p class="text-sm text-gray-600"><?php bloginfo('description'); ?></p>
+        <p class="text-sm text-ellipsis"><?php bloginfo('description'); ?></p>
       </div>
 
       <nav id="site-navigation" class="main-navigation" role="navigation">
