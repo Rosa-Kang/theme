@@ -61,29 +61,26 @@ add_action('widgets_init', 'therosessom_widgets_init');
 
 // Enqueue styles and scripts
 function therosessom_enqueue_assets() {
+  // Register CSS file with timestamp as version to prevent caching issues
   wp_enqueue_style(
     'main-style',
     get_template_directory_uri() . '/dist/main.css',
     [],
     filemtime(get_template_directory() . '/dist/main.css')
   );
-  wp_enqueue_script('main-script', get_template_directory_uri() . '/dist/main.js', array(), null, true);
-}
-add_action('wp_enqueue_scripts', 'therosessom_enqueue_assets');
-
-function enqueue_vite_assets() {
-  $is_local = strpos($_SERVER['HTTP_HOST'], 'localhost') !== false || 
-              strpos($_SERVER['HTTP_HOST'], '.test') !== false ||
-              strpos($_SERVER['HTTP_HOST'], '.local') !== false;
-              
-  if ($is_local && file_exists(get_template_directory() . '/package.json')) {
-      wp_enqueue_script('vite-client', 'http://localhost:5173/@vite/client', array(), null, true);
-      wp_enqueue_style('vite-css', 'http://localhost:5173/src/input.css', array(), null);
-  } else {
-      wp_enqueue_style('theme-styles', get_template_directory_uri() . '/dist/main.css', array(), '1.0.0');
+  
+  // Register JS file only if it exists
+  if (file_exists(get_template_directory() . '/dist/main.js')) {
+    wp_enqueue_script(
+      'main-script', 
+      get_template_directory_uri() . '/dist/main.js', 
+      [], 
+      filemtime(get_template_directory() . '/dist/main.js'),
+      true
+    );
   }
 }
-add_action('wp_enqueue_scripts', 'enqueue_vite_assets');
+add_action('wp_enqueue_scripts', 'therosessom_enqueue_assets');
 
 // Remove theme/plugin editor links for security reasons (optional)
 function therosessom_remove_submenus() {
